@@ -1,0 +1,1304 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anime Max — Dashboard</title>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080808;
+      color: white;
+      min-height: 100vh;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+      height: 70px;
+      padding: 0 5%;
+
+      background: #0c0c0c;
+      border-bottom: 1px solid #222;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+    }
+
+    .logo span {
+      color: #ff7a00;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back-btn {
+      padding: 10px 16px;
+
+      background: #191919;
+      color: #ddd;
+
+      border: 1px solid #333;
+      border-radius: 7px;
+    }
+
+    .logout-btn {
+      padding: 10px 16px;
+
+      background: #ff7a00;
+      color: white;
+
+      border: none;
+      border-radius: 7px;
+
+      font-weight: bold;
+    }
+
+    /* ================= MAIN ================= */
+
+    main {
+      width: min(1200px, 92%);
+      margin: auto;
+      padding: 40px 0;
+    }
+
+    /* ================= PROFILE ================= */
+
+    .profile {
+      background:
+        linear-gradient(
+          135deg,
+          #1c1209,
+          #111
+        );
+
+      border: 1px solid #2b2b2b;
+      border-radius: 16px;
+
+      padding: 30px;
+
+      display: flex;
+      align-items: center;
+      gap: 22px;
+
+      margin-bottom: 30px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+
+      border-radius: 50%;
+
+      background: #ff7a00;
+
+      display: grid;
+      place-items: center;
+
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    .profile h1 {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .profile p {
+      color: #999;
+      word-break: break-all;
+    }
+
+    .member {
+      margin-top: 10px;
+
+      display: inline-block;
+
+      padding: 5px 9px;
+
+      background: #24170b;
+      color: #ff9b43;
+
+      border-radius: 5px;
+
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    /* ================= STATS ================= */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 15px;
+
+      margin-bottom: 40px;
+    }
+
+    .stat {
+      background: #121212;
+
+      border: 1px solid #252525;
+      border-radius: 12px;
+
+      padding: 22px;
+    }
+
+    .stat-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      color: #777;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    /* ================= SECTION ================= */
+
+    .section {
+      margin-bottom: 45px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      font-size: 22px;
+    }
+
+    .section-title span {
+      color: #ff7a00;
+      font-size: 12px;
+    }
+
+    /* ================= CONTINUE ================= */
+
+    .continue-card {
+      background: #121212;
+
+      border: 1px solid #242424;
+      border-radius: 12px;
+
+      padding: 18px;
+
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .continue-poster {
+      width: 100px;
+      height: 140px;
+
+      border-radius: 7px;
+
+      background: #222;
+
+      object-fit: cover;
+    }
+
+    .continue-info {
+      flex: 1;
+    }
+
+    .continue-info h3 {
+      margin-bottom: 8px;
+    }
+
+    .continue-info p {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 5px;
+
+      background: #292929;
+
+      border-radius: 5px;
+
+      overflow: hidden;
+
+      margin-bottom: 7px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 42%;
+
+      background: #ff7a00;
+    }
+
+    .progress-text {
+      color: #777;
+      font-size: 11px;
+    }
+
+    .resume-btn {
+      padding: 11px 17px;
+
+      background: #ff7a00;
+      color: white;
+
+      border: none;
+      border-radius: 7px;
+
+      font-weight: bold;
+    }
+
+    /* ================= LIST ================= */
+
+    .anime-list {
+      display: grid;
+
+      grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+      gap: 16px;
+    }
+
+    .anime-card {
+      background: #121212;
+
+      border: 1px solid #242424;
+      border-radius: 9px;
+
+      overflow: hidden;
+    }
+
+    .poster {
+      width: 100%;
+      height: 240px;
+
+      object-fit: cover;
+
+      background: #1c1c1c;
+    }
+
+    .anime-info {
+      padding: 13px;
+    }
+
+    .anime-info h3 {
+      font-size: 14px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      margin-bottom: 10px;
+    }
+
+    .watch-small {
+      width: 100%;
+
+      padding: 10px;
+
+      border: none;
+      border-radius: 6px;
+
+      background: #ff7a00;
+      color: white;
+
+      font-weight: bold;
+    }
+
+    /* ================= EMPTY ================= */
+
+    .empty {
+      padding: 35px;
+
+      background: #111;
+
+      border: 1px solid #222;
+      border-radius: 10px;
+
+      text-align: center;
+
+      color: #777;
+    }
+
+    /* ================= SETTINGS ================= */
+
+    .settings {
+      background: #121212;
+
+      border: 1px solid #242424;
+      border-radius: 12px;
+
+      overflow: hidden;
+    }
+
+    .setting {
+      padding: 20px;
+
+      border-bottom: 1px solid #242424;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .setting:last-child {
+      border-bottom: none;
+    }
+
+    .setting h3 {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .setting p {
+      color: #777;
+      font-size: 12px;
+    }
+
+    .danger {
+      padding: 9px 14px;
+
+      border: 1px solid #633;
+      border-radius: 6px;
+
+      background: #211010;
+      color: #ff7777;
+    }
+
+    /* ================= LOADING ================= */
+
+    #loading {
+      position: fixed;
+      inset: 0;
+
+      background: #080808;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      z-index: 9999;
+    }
+
+    .loader {
+      text-align: center;
+    }
+
+    .spinner {
+      width: 45px;
+      height: 45px;
+
+      border: 4px solid #333;
+      border-top-color: #ff7a00;
+
+      border-radius: 50%;
+
+      animation: spin .8s linear infinite;
+
+      margin: auto auto 15px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width: 750px) {
+
+      .stats {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .profile {
+        padding: 20px;
+      }
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+      }
+
+      .profile h1 {
+        font-size: 21px;
+      }
+
+      .continue-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .continue-info {
+        min-width: 180px;
+      }
+
+      .resume-btn {
+        width: 100%;
+      }
+
+      .anime-list {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .poster {
+        height: 220px;
+      }
+
+    }
+
+    @media(max-width: 450px) {
+
+      .nav-right .back-btn {
+        display: none;
+      }
+
+      main {
+        width: 94%;
+      }
+
+      .stats {
+        gap: 8px;
+      }
+
+      .stat {
+        padding: 15px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= LOADING ================= -->
+
+<div id="loading">
+
+  <div class="loader">
+
+    <div class="spinner"></div>
+
+    <p>
+      Loading Anime Max...
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+  <div class="logo">
+    ANIME<span>MAX</span>
+  </div>
+
+  <div class="nav-right">
+
+    <button
+      class="back-btn"
+      onclick="location.href='index.html'"
+    >
+      ← Browse Anime
+    </button>
+
+    <button
+      class="logout-btn"
+      onclick="logoutUser()"
+    >
+      LOG OUT
+    </button>
+
+  </div>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+
+  <!-- PROFILE -->
+
+  <section class="profile">
+
+    <div
+      class="avatar"
+      id="avatar"
+    >
+      A
+    </div>
+
+    <div>
+
+      <h1>
+        Welcome back! 👋
+      </h1>
+
+      <p id="userEmail">
+        Loading...
+      </p>
+
+      <span class="member">
+        ANIME MAX MEMBER
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- STATS -->
+
+  <section class="stats">
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        ❤️
+      </div>
+
+      <div
+        class="stat-number"
+        id="listCount"
+      >
+        0
+      </div>
+
+      <div class="stat-label">
+        My List
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        🎬
+      </div>
+
+      <div
+        class="stat-number"
+        id="historyCount"
+      >
+        0
+      </div>
+
+      <div class="stat-label">
+        Watched Anime
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        ▶️
+      </div>
+
+      <div
+        class="stat-number"
+        id="episodeCount"
+      >
+        0
+      </div>
+
+      <div class="stat-label">
+        Episodes
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-icon">
+        ⭐
+      </div>
+
+      <div
+        class="stat-number"
+        id="daysCount"
+      >
+        1
+      </div>
+
+      <div class="stat-label">
+        Member Days
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONTINUE WATCHING -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <h2>
+        ▶ Continue Watching
+      </h2>
+
+      <span>
+        YOUR HISTORY
+      </span>
+
+    </div>
+
+    <div id="continueWatching">
+
+      <div class="empty">
+        No anime to continue watching yet.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- MY LIST -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <h2>
+        ❤️ My List
+      </h2>
+
+      <span>
+        SAVED ANIME
+      </span>
+
+    </div>
+
+    <div
+      class="anime-list"
+      id="myList"
+    ></div>
+
+  </section>
+
+
+  <!-- WATCH HISTORY -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <h2>
+        🕘 Watch History
+      </h2>
+
+    </div>
+
+    <div
+      class="anime-list"
+      id="watchHistory"
+    ></div>
+
+  </section>
+
+
+  <!-- ACCOUNT SETTINGS -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <h2>
+        ⚙️ Account
+      </h2>
+
+    </div>
+
+    <div class="settings">
+
+      <div class="setting">
+
+        <div>
+
+          <h3>
+            Email
+          </h3>
+
+          <p id="settingsEmail">
+            Loading...
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <h3>
+            Account Status
+          </h3>
+
+          <p>
+            Your Anime Max account is active.
+          </p>
+
+        </div>
+
+        <span class="member">
+          ACTIVE
+        </span>
+
+      </div>
+
+
+      <div class="setting">
+
+        <div>
+
+          <h3>
+            Sign Out
+          </h3>
+
+          <p>
+            Sign out of this device.
+          </p>
+
+        </div>
+
+        <button
+          class="danger"
+          onclick="logoutUser()"
+        >
+          Sign Out
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+  import {
+    initializeApp
+  } from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+  } from
+  "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+  /* ================= FIREBASE CONFIG ================= */
+
+  const firebaseConfig = {
+
+    apiKey:
+      "AIzaSyAK-FrebpBiK26Dry8wMiOEQv8QGUWc_ic",
+
+    authDomain:
+      "anime-max-e89f9.firebaseapp.com",
+
+    projectId:
+      "anime-max-e89f9",
+
+    storageBucket:
+      "anime-max-e89f9.firebasestorage.app",
+
+    messagingSenderId:
+      "330951929844",
+
+    appId:
+      "1:330951929844:web:1d58dde5205177b37513a1",
+
+    measurementId:
+      "G-HYGR27ZYH5"
+
+  };
+
+
+  const app =
+    initializeApp(firebaseConfig);
+
+  const auth =
+    getAuth(app);
+
+
+  /* ================= AUTH CHECK ================= */
+
+  onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+      // Not logged in
+      window.location.href =
+        "index.html";
+
+      return;
+
+    }
+
+
+    document.getElementById(
+      "loading"
+    ).style.display = "none";
+
+
+    displayUser(user);
+
+    loadDashboard();
+
+  });
+
+
+  /* ================= USER ================= */
+
+  function displayUser(user) {
+
+    const email =
+      user.email || "Anime Max User";
+
+
+    document.getElementById(
+      "userEmail"
+    ).innerText = email;
+
+
+    document.getElementById(
+      "settingsEmail"
+    ).innerText = email;
+
+
+    const firstLetter =
+      email.charAt(0).toUpperCase();
+
+
+    document.getElementById(
+      "avatar"
+    ).innerText = firstLetter;
+
+  }
+
+
+  /* ================= DASHBOARD DATA ================= */
+
+  function loadDashboard() {
+
+    const list =
+      JSON.parse(
+        localStorage.getItem(
+          "animeMaxWatchlist"
+        )
+      ) || [];
+
+
+    const history =
+      JSON.parse(
+        localStorage.getItem(
+          "animeMaxHistory"
+        )
+      ) || [];
+
+
+    document.getElementById(
+      "listCount"
+    ).innerText = list.length;
+
+
+    document.getElementById(
+      "historyCount"
+    ).innerText = history.length;
+
+
+    document.getElementById(
+      "episodeCount"
+    ).innerText =
+      history.length;
+
+
+    renderList(list);
+
+    renderHistory(history);
+
+    renderContinue(history);
+
+  }
+
+
+  /* ================= MY LIST ================= */
+
+  function renderList(list) {
+
+    const container =
+      document.getElementById(
+        "myList"
+      );
+
+
+    if (list.length === 0) {
+
+      container.innerHTML = `
+
+        <div class="empty"
+             style="grid-column:1/-1">
+
+          Your My List is empty ❤️
+
+          <br><br>
+
+          <button
+            class="watch-small"
+            onclick="location.href='index.html'"
+          >
+            BROWSE ANIME
+          </button>
+
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      list.map((anime) => `
+
+        <div class="anime-card">
+
+          <div
+            class="poster"
+            style="
+              display:grid;
+              place-items:center;
+              font-size:35px;
+            "
+          >
+            🎬
+          </div>
+
+          <div class="anime-info">
+
+            <h3>
+              ${escapeHTML(anime)}
+            </h3>
+
+            <button
+              class="watch-small"
+              onclick="watchAnime('${escapeJS(anime)}')"
+            >
+              ▶ WATCH
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("");
+
+  }
+
+
+  /* ================= HISTORY ================= */
+
+  function renderHistory(history) {
+
+    const container =
+      document.getElementById(
+        "watchHistory"
+      );
+
+
+    if (history.length === 0) {
+
+      container.innerHTML = `
+
+        <div
+          class="empty"
+          style="grid-column:1/-1"
+        >
+          Your watch history is empty 🕘
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML =
+      history.map((anime) => `
+
+        <div class="anime-card">
+
+          <div
+            class="poster"
+            style="
+              display:grid;
+              place-items:center;
+              font-size:35px;
+            "
+          >
+            ▶️
+          </div>
+
+          <div class="anime-info">
+
+            <h3>
+              ${escapeHTML(anime)}
+            </h3>
+
+            <button
+              class="watch-small"
+              onclick="watchAnime('${escapeJS(anime)}')"
+            >
+              WATCH AGAIN
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join("");
+
+  }
+
+
+  /* ================= CONTINUE ================= */
+
+  function renderContinue(history) {
+
+    const container =
+      document.getElementById(
+        "continueWatching"
+      );
+
+
+    if (history.length === 0) {
+
+      container.innerHTML = `
+
+        <div class="empty">
+          Start watching an anime and it will
+          appear here.
+        </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    const anime =
+      history[history.length - 1];
+
+
+    container.innerHTML = `
+
+      <div class="continue-card">
+
+        <div
+          class="continue-poster"
+          style="
+            display:grid;
+            place-items:center;
+            font-size:35px;
+          "
+        >
+          🎬
+        </div>
+
+        <div class="continue-info">
+
+          <h3>
+            ${escapeHTML(anime)}
+          </h3>
+
+          <p>
+            Episode 1
+          </p>
+
+          <div class="progress">
+
+            <div class="progress-bar"></div>
+
+          </div>
+
+          <div class="progress-text">
+            42% watched
+          </div>
+
+        </div>
+
+        <button
+          class="resume-btn"
+          onclick="watchAnime('${escapeJS(anime)}')"
+        >
+          ▶ RESUME
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* ================= WATCH ================= */
+
+  window.watchAnime = function(anime) {
+
+    let history =
+      JSON.parse(
+        localStorage.getItem(
+          "animeMaxHistory"
+        )
+      ) || [];
+
+
+    history =
+      history.filter(
+        item => item !== anime
+      );
+
+
+    history.push(anime);
+
+
+    localStorage.setItem(
+      "animeMaxHistory",
+      JSON.stringify(history)
+    );
+
+
+    alert(
+      "Opening " + anime + " 🎬"
+    );
+
+  };
+
+
+  /* ================= LOGOUT ================= */
+
+  window.logoutUser = async function() {
+
+    try {
+
+      await signOut(auth);
+
+      window.location.href =
+        "index.html";
+
+    } catch(error) {
+
+      alert(error.message);
+
+    }
+
+  };
+
+
+  /* ================= SECURITY ================= */
+
+  function escapeHTML(text) {
+
+    return String(text)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  function escapeJS(text) {
+
+    return String(text)
+      .replaceAll("\\", "\\\\")
+      .replaceAll("'", "\\'")
+      .replaceAll("\n", "\\n")
+      .replaceAll("\r", "\\r");
+
+  }
+
+</script>
+
+</body>
+</html>
+```
