@@ -1,28 +1,840 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Anime Max</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#000;color:#fff}
-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:#111;position:sticky;top:0}
-.logo{font-size:30px;font-weight:bold;color:#ff003c}
-.hero{height:320px;padding:20px;display:flex;align-items:flex-end;background:linear-gradient(to top,#000,transparent),linear-gradient(135deg,#5b21b6,#e11d48)}
-.hero h1{font-size:42px}.hero p{margin:8px 0;color:#ddd}
-.btn{background:#ff003c;color:#fff;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:bold;display:inline-block}
-.search{padding:15px}.search input{width:100%;padding:13px;border:none;border-radius:30px;background:#1a1a1a;color:#fff}
-section{padding:18px}h2{margin-bottom:12px}.row{display:flex;overflow:auto;gap:12px}.card{min-width:145px;background:#161616;border-radius:12px;overflow:hidden}.poster{height:200px;background:linear-gradient(180deg,#ff003c,#5b21b6)}.title{padding:10px;text-align:center;font-size:14px}
-footer{text-align:center;color:#777;padding:20px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Anime Max - Watch Anime</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #080808;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    nav {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(8,8,8,.95);
+      border-bottom: 1px solid #222;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      cursor: pointer;
+    }
+
+    .logo span {
+      color: #ff7a00;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #bbb;
+      text-decoration: none;
+      font-size: 14px;
+      transition: .2s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #ff7a00;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      background: #181818;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: white;
+      width: 210px;
+      outline: none;
+    }
+
+    .login-btn {
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      background: #ff7a00;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 580px;
+      display: flex;
+      align-items: center;
+      padding: 60px 8%;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, #080808 0%, rgba(8,8,8,.8) 38%, rgba(8,8,8,.15)),
+        linear-gradient(180deg, rgba(8,8,8,0) 65%, #080808 100%),
+        url("https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-content {
+      max-width: 600px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ff7a00;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 7vw, 82px);
+      line-height: .95;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #ff7a00;
+    }
+
+    .meta {
+      display: flex;
+      gap: 14px;
+      color: #bbb;
+      font-size: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hero p {
+      color: #ccc;
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .primary-btn {
+      border: none;
+      background: #ff7a00;
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: .2s;
+    }
+
+    .primary-btn:hover {
+      transform: scale(1.04);
+      background: #ff8c24;
+    }
+
+    .secondary-btn {
+      border: 1px solid #555;
+      background: rgba(30,30,30,.8);
+      color: white;
+      padding: 14px 25px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    /* CONTENT */
+    .container {
+      padding: 30px 5%;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .section-title h2 {
+      font-size: 25px;
+    }
+
+    .section-title button {
+      background: none;
+      border: none;
+      color: #ff7a00;
+      cursor: pointer;
+    }
+
+    /* CARDS */
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #121212;
+      border-radius: 9px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+      border: 1px solid #202020;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 12px 30px rgba(255,122,0,.18);
+    }
+
+    .poster {
+      height: 240px;
+      background: linear-gradient(135deg, #292929, #111);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .3s;
+    }
+
+    .card:hover .poster img {
+      transform: scale(1.08);
+    }
+
+    .episode-tag {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(0,0,0,.8);
+      padding: 5px 8px;
+      font-size: 11px;
+      border-radius: 4px;
+    }
+
+    .card-info {
+      padding: 13px;
+    }
+
+    .card-info h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-info p {
+      color: #999;
+      font-size: 12px;
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .filter {
+      padding: 9px 15px;
+      border-radius: 20px;
+      border: 1px solid #333;
+      background: #151515;
+      color: #bbb;
+      cursor: pointer;
+    }
+
+    .filter.active,
+    .filter:hover {
+      background: #ff7a00;
+      color: white;
+      border-color: #ff7a00;
+    }
+
+    /* WATCHLIST */
+    .empty {
+      color: #777;
+      padding: 30px;
+      background: #111;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    /* MODAL PLAYER */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      z-index: 5000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .player-box {
+      width: min(900px, 100%);
+      background: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+
+    .fake-player {
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(circle at center, #2d1a0b, #050505 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .play-circle {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background: #ff7a00;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+
+    .player-info {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .close-btn {
+      background: #222;
+      color: white;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #222;
+      padding: 40px 5%;
+      color: #777;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer strong {
+      color: #ff7a00;
+    }
+
+    /* MOBILE */
+    @media(max-width: 800px) {
+      nav {
+        padding: 0 15px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .search-box {
+        width: 130px;
+      }
+
+      .login-btn {
+        display: none;
+      }
+
+      .hero {
+        min-height: 520px;
+        padding: 50px 6%;
+      }
+
+      .anime-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .poster {
+        height: 250px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header><div class="logo">ANIME MAX</div><div>🔔</div></header>
-<div class="hero"><div><h1>Solo Leveling</h1><p>Season 2 • Action • Fantasy</p><a href="#" class="btn">▶ Watch Now</a></div></div>
-<div class="search"><input placeholder="🔍 Search Anime"></div>
-<section><h2>🔥 Trending</h2><div class="row"><div class="card"><div class="poster"></div><div class="title">Naruto</div></div><div class="card"><div class="poster"></div><div class="title">One Piece</div></div><div class="card"><div class="poster"></div><div class="title">JJK</div></div><div class="card"><div class="poster"></div><div class="title">Demon Slayer</div></div></div></section>
-<section><h2>⭐ Popular</h2><div class="row"><div class="card"><div class="poster"></div><div class="title">Blue Lock</div></div><div class="card"><div class="poster"></div><div class="title">Chainsaw Man</div></div><div class="card"><div class="poster"></div><div class="title">Attack on Titan</div></div></div></section>
-<footer>© 2026 Anime Max</footer>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo">ANIME<span>MAX</span></div>
+
+    <div class="nav-links">
+      <a class="active" onclick="scrollToSection('home')">Home</a>
+      <a onclick="scrollToSection('trending')">Trending</a>
+      <a onclick="scrollToSection('popular')">Popular</a>
+      <a onclick="showWatchlist()">My List</a>
+    </div>
+
+    <div class="nav-right">
+      <input
+        type="text"
+        id="search"
+        class="search-box"
+        placeholder="Search anime..."
+        oninput="searchAnime()"
+      >
+      <button class="login-btn" onclick="alert('Login system can be connected to Firebase!')">
+        LOG IN
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="badge">FEATURED THIS WEEK</div>
+
+      <h1>ENTER THE <span>ANIME</span> WORLD</h1>
+
+      <div class="meta">
+        <span>★ 9.8 Rating</span>
+        <span>2026</span>
+        <span>HD</span>
+        <span>Action</span>
+      </div>
+
+      <p>
+        Discover amazing stories, legendary heroes, epic adventures,
+        and unforgettable worlds. Watch your favorite anime on Anime Max.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="primary-btn" onclick="openPlayer('Featured Anime')">
+          ▶ WATCH NOW
+        </button>
+
+        <button class="secondary-btn" onclick="addToList('Featured Anime')">
+          + MY LIST
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- GENRES -->
+    <section class="section">
+      <div class="section-title">
+        <h2>Browse by Genre</h2>
+      </div>
+
+      <div class="filters">
+        <button class="filter active" onclick="filterAnime('all', this)">All</button>
+        <button class="filter" onclick="filterAnime('action', this)">Action</button>
+        <button class="filter" onclick="filterAnime('adventure', this)">Adventure</button>
+        <button class="filter" onclick="filterAnime('fantasy', this)">Fantasy</button>
+        <button class="filter" onclick="filterAnime('comedy', this)">Comedy</button>
+        <button class="filter" onclick="filterAnime('drama', this)">Drama</button>
+      </div>
+    </section>
+
+    <!-- TRENDING -->
+    <section class="section" id="trending">
+      <div class="section-title">
+        <h2>🔥 Trending Now</h2>
+        <button onclick="alert('More anime can be loaded from an API!')">
+          VIEW ALL →
+        </button>
+      </div>
+
+      <div class="anime-grid" id="animeGrid">
+
+        <div class="card anime-card" data-name="Demon Slayer" data-genre="action fantasy">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 24</span>
+          </div>
+          <div class="card-info">
+            <h3>Demon Slayer</h3>
+            <p>Action • Fantasy</p>
+          </div>
+        </div>
+
+        <div class="card anime-card" data-name="Attack on Titan" data-genre="action drama">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 87</span>
+          </div>
+          <div class="card-info">
+            <h3>Attack on Titan</h3>
+            <p>Action • Drama</p>
+          </div>
+        </div>
+
+        <div class="card anime-card" data-name="Jujutsu Kaisen" data-genre="action fantasy">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 47</span>
+          </div>
+          <div class="card-info">
+            <h3>Jujutsu Kaisen</h3>
+            <p>Action • Fantasy</p>
+          </div>
+        </div>
+
+        <div class="card anime-card" data-name="One Piece" data-genre="adventure action">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 1100+</span>
+          </div>
+          <div class="card-info">
+            <h3>One Piece</h3>
+            <p>Adventure • Action</p>
+          </div>
+        </div>
+
+        <div class="card anime-card" data-name="Solo Leveling" data-genre="action fantasy">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 25</span>
+          </div>
+          <div class="card-info">
+            <h3>Solo Leveling</h3>
+            <p>Action • Fantasy</p>
+          </div>
+        </div>
+
+        <div class="card anime-card" data-name="My Hero Academia" data-genre="action adventure">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 160+</span>
+          </div>
+          <div class="card-info">
+            <h3>My Hero Academia</h3>
+            <p>Action • Adventure</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- POPULAR -->
+    <section class="section" id="popular">
+      <div class="section-title">
+        <h2>⭐ Most Popular</h2>
+      </div>
+
+      <div class="anime-grid">
+
+        <div class="card" onclick="openPlayer('Anime Adventures')">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1520975958225-45c04e52c0f6?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">NEW</span>
+          </div>
+          <div class="card-info">
+            <h3>Anime Adventures</h3>
+            <p>Adventure • Fantasy</p>
+          </div>
+        </div>
+
+        <div class="card" onclick="openPlayer('Dragon Legends')">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 12</span>
+          </div>
+          <div class="card-info">
+            <h3>Dragon Legends</h3>
+            <p>Fantasy • Action</p>
+          </div>
+        </div>
+
+        <div class="card" onclick="openPlayer('Shadow Warriors')">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 8</span>
+          </div>
+          <div class="card-info">
+            <h3>Shadow Warriors</h3>
+            <p>Action • Drama</p>
+          </div>
+        </div>
+
+        <div class="card" onclick="openPlayer('Magic Academy')">
+          <div class="poster">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=80" alt="Anime">
+            <span class="episode-tag">EP 16</span>
+          </div>
+          <div class="card-info">
+            <h3>Magic Academy</h3>
+            <p>Fantasy • Comedy</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WATCHLIST -->
+    <section class="section" id="watchlist">
+      <div class="section-title">
+        <h2>❤️ My List</h2>
+      </div>
+
+      <div id="watchlistContent" class="empty">
+        Your watchlist is empty. Add an anime to get started!
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PLAYER MODAL -->
+  <div class="modal" id="playerModal">
+
+    <div class="player-box">
+
+      <div class="fake-player">
+        <div class="play-circle" onclick="alert('Connect your licensed video source here!')">
+          ▶
+        </div>
+
+        <h2 id="playerTitle">Anime</h2>
+        <p style="color:#999; margin-top:10px;">
+          Demo player — connect your own licensed video content.
+        </p>
+      </div>
+
+      <div class="player-info">
+        <div>
+          <strong id="episodeTitle">Episode 1</strong>
+          <p style="color:#888; margin-top:5px;">Anime Max Streaming</p>
+        </div>
+
+        <button class="close-btn" onclick="closePlayer()">×</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <h2 class="logo">ANIME<span>MAX</span></h2>
+    <br>
+    <p>Your anime discovery and streaming platform.</p>
+    <br>
+    <small>© 2026 <strong>Anime Max</strong>. Demo website.</small>
+  </footer>
+
+  <script>
+    let watchlist = JSON.parse(localStorage.getItem("animeMaxList")) || [];
+
+    // Make cards clickable
+    document.querySelectorAll(".anime-card").forEach(card => {
+      card.addEventListener("click", () => {
+        openPlayer(card.dataset.name);
+      });
+    });
+
+    function openPlayer(animeName) {
+      document.getElementById("playerTitle").innerText = animeName;
+      document.getElementById("episodeTitle").innerText = animeName + " - Episode 1";
+
+      document.getElementById("playerModal").classList.add("active");
+    }
+
+    function closePlayer() {
+      document.getElementById("playerModal").classList.remove("active");
+    }
+
+    function addToList(animeName) {
+
+      if (!watchlist.includes(animeName)) {
+        watchlist.push(animeName);
+
+        localStorage.setItem(
+          "animeMaxList",
+          JSON.stringify(watchlist)
+        );
+
+        renderWatchlist();
+
+        alert(animeName + " added to My List!");
+      } else {
+        alert("This anime is already in your list!");
+      }
+    }
+
+    function renderWatchlist() {
+      const container = document.getElementById("watchlistContent");
+
+      if (watchlist.length === 0) {
+        container.className = "empty";
+        container.innerHTML =
+          "Your watchlist is empty. Add an anime to get started!";
+        return;
+      }
+
+      container.className = "";
+
+      container.innerHTML = `
+        <div class="filters">
+          ${watchlist.map((anime, index) => `
+            <button class="filter">
+              ▶ ${anime}
+              <span
+                style="margin-left:8px;color:#ff7a00;"
+                onclick="removeFromList(${index})"
+              >×</span>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function removeFromList(index) {
+      watchlist.splice(index, 1);
+
+      localStorage.setItem(
+        "animeMaxList",
+        JSON.stringify(watchlist)
+      );
+
+      renderWatchlist();
+    }
+
+    function searchAnime() {
+      const value = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+      document.querySelectorAll(".anime-card").forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+
+        if (name.includes(value)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    function filterAnime(genre, button) {
+
+      document.querySelectorAll(".filter").forEach(btn => {
+        if (
+          ["All", "Action", "Adventure", "Fantasy", "Comedy", "Drama"]
+          .includes(btn.innerText)
+        ) {
+          btn.classList.remove("active");
+        }
+      });
+
+      button.classList.add("active");
+
+      document.querySelectorAll(".anime-card").forEach(card => {
+
+        const genres = card.dataset.genre;
+
+        if (genre === "all" || genres.includes(genre)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+
+      });
+    }
+
+    function scrollToSection(id) {
+      document
+        .getElementById(id)
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+    }
+
+    function showWatchlist() {
+      scrollToSection("watchlist");
+    }
+
+    // Close modal when clicking outside player
+    document
+      .getElementById("playerModal")
+      .addEventListener("click", function(event) {
+        if (event.target === this) {
+          closePlayer();
+        }
+      });
+
+    renderWatchlist();
+  </script>
+
 </body>
 </html>
+```
